@@ -23,3 +23,11 @@ export const addNoteToTopic = async (req, res) => {
   await topic.save();
   res.json(topic);
 };
+
+export const updateNotes = async (req, res) => {
+  const topic = await Topic.findOne({ _id: req.params.id, user: req.user.id });
+  if (!topic) return res.status(404).json({ message: 'Topic not found' });
+  topic.notes = req.body.notes;
+    await topic.save();
+    res.json(topic);
+}; 
